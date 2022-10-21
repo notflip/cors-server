@@ -7,8 +7,8 @@ const port = process.env.PORT || 8080;
 
 corsProxy.createServer({
     originWhitelist: [
-        'https://theharbour2.webflow.io/',
-        'https://theharbour.be/'
+        'https://theharbour2.webflow.io',
+        'https://theharbour.be'
     ],
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
