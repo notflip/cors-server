@@ -1,21 +1,17 @@
-# CORS-Anywhere Server
+# `IMPORTANT NOTICE`
 
-[CORS-Anywhere](https://www.npmjs.com/package/cors-anywhere) is a Node.js package that adds [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) headers to a proxied request. This is useful when the API provider does not natively support CORS. Without altering the headers, a request to such a provider would cause an error and prevent the request from being fulfilled.
+### Heroku will [withdraw](https://devcenter.heroku.com/articles/free-dyno-hours) provision of free Dynos on 28th of November 2022. The [cost](https://www.heroku.com/pricing) will be $7 per Dyno per month after that.
 
-**Tip:** You can test out the server in this repo locally by using ports `3000` or `5000` in your application and prepending `https://private-cors-server.up.railway.app/` to your API request [like this](https://github.com/Isoaxe/ravenous/blob/master/src/util/searchYelp.js#L10). However, if you want to use for a hosted website, then follow the implementation steps below.
+## Implementation using Heroku
 
-## Implementation
+Implementation of a basic CORS-Anywhere server is very straightforward. Simply do the following:
 
-The server can be implemented in one of three ways. Is is recommended to use Railway currently.
+1. Fork this repository.
+2. Move all of the files in this directory (except this `README`) to root. Heroku only accepts deployment from the root directory and the `master` or `main` branch.
+3. Within [server.js](https://github.com/Isoaxe/cors-server/blob/master/heroku/server.js#L9), replace the website string in the `originWhitelist` array with the web address(es) that you want to authorise. You can keep the first string here as is for local testing (assuming you're using port 3000).
+4. Now simply upload / push the repo to a hosting provider. I used a free [Heroku](https://id.heroku.com/login) account to create a Node.js app. This can be done without any knowledge of Node, and only a basic familiarity with Git and the command line. Just follow the excellent documentation [here](https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment) (steps 3 to 6 inclusive can be ignored).
+5. Prepend the API request in your application code with the server URL as generated in the previous step [like so](https://github.com/Isoaxe/ravenous/blob/master/src/util/searchYelp.js#L10). That's it, you've implemented the server!
 
-### Heroku
+**Tip:** If hosting on Heroku, a Procfile has already been created in this repository. This instructs the Heroku Node app on how to start the server.
 
-Navigate to the [`heroku`](https://github.com/Isoaxe/cors-server/tree/master/heroku) directory and follow the steps within the `README.md` therein. Note that Heroku will [withdraw](https://devcenter.heroku.com/articles/free-dyno-hours) provision of free Dynos on 28th of November 2022. The [cost](https://www.heroku.com/pricing) will be $7 per Dyno per month thereafter.
-
-### Firebase
-
-Navigate to the [`functions`](https://github.com/Isoaxe/cors-server/tree/master/functions) directory and follow the steps within the `README.md` therein. Note that there continues to be some issues when hosting remote using Firebase functions. Until these are resolved, it is advised that you use the `railway` implementation.
-
-### Railway
-
-Navigate to the [`railway`](https://github.com/Isoaxe/cors-server/tree/master/railway) directory and follow the steps within the `README.md` therein. This is the recommended implementation due to the issues outlined in the others above.
+**Note:** Heroku's [acceptable use policy](https://www.heroku.com/policy/aup) forbids the use of an open proxy (see part 6, item XIX). Therefore, make sure to follow point 2 above. Leaving the array empty authorises all requests and therefore violates the AUP.
